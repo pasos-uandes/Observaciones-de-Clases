@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Observaciones de clases 2026 — PASOS UANDES</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #E24B4A; --red-light: #FCEBEB;
+    --amber: #EF9F27; --amber-light: #FAEEDA;
+    --green: #1D9E75; --green-light: #E1F5EE;
+    --blue: #378ADD; --blue-light: #E6F1FB;
+    --slate: #64748B; --slate-light: #F1F5F9;
+    --bg: #ffffff; --bg2: #f7f7f5; --bg3: #f0efec;
+    --text: #1a1a1a; --text2: #666; --text3: #999;
+    --border: rgba(0,0,0,0.1); --border2: rgba(0,0,0,0.2);
+    --radius: 8px; --radius-lg: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a; --bg2: #242424; --bg3: #2e2e2e;
+      --text: #f0f0f0; --text2: #aaa; --text3: #666;
+      --border: rgba(255,255,255,0.1); --border2: rgba(255,255,255,0.2);
+      --red-light: #3a1010; --amber-light: #3a2a00;
+      --green-light: #0a2a1e; --blue-light: #0a1e36;
+      --slate-light: #1e2530;
+    }
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; background: var(--bg3); color: var(--text); min-height: 100vh; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 28px 20px; }
+
+  .top-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+  .top-bar h1 { font-size: 19px; font-weight: 600; color: var(--blue); display: flex; align-items: center; gap: 8px; }
+  .top-bar h1 svg { width: 22px; height: 22px; }
+  .update-time { font-size: 12px; color: var(--text3); }
+  .btn { font-size: 12px; padding: 6px 14px; border-radius: var(--radius); border: 0.5px solid var(--border2); background: var(--bg2); color: var(--text2); cursor: pointer; font-family: inherit; transition: background 0.15s; }
+  .btn:hover { background: var(--bg3); color: var(--text); }
+
+  .filters { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 24px; }
+  .fgroup { display: flex; flex-direction: column; gap: 4px; }
+  .fgroup label { font-size: 11px; font-weight: 500; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; }
+  .ms-wrap { position: relative; }
+  .ms-box { display: flex; align-items: center; gap: 6px; font-size: 13px; padding: 6px 10px; border-radius: var(--radius); border: 0.5px solid var(--border2); background: var(--bg2); color: var(--text); min-width: 220px; cursor: pointer; user-select: none; }
+  .ms-box:hover { border-color: var(--blue); }
+  .ms-arrow { margin-left: auto; opacity: 0.5; font-size: 11px; }
+  .ms-menu { position: absolute; top: calc(100% + 4px); left: 0; z-index: 999; background: var(--bg); border: 0.5px solid var(--border2); border-radius: var(--radius-lg); box-shadow: 0 4px 20px rgba(0,0,0,0.13); min-width: 260px; max-height: 320px; overflow-y: auto; padding: 6px 0; }
+  .ms-search { padding: 6px 12px 4px; }
+  .ms-search input { width: 100%; font-size: 12px; padding: 5px 8px; border-radius: var(--radius); border: 0.5px solid var(--border2); background: var(--bg2); color: var(--text); font-family: inherit; outline: none; }
+  .ms-item { display: flex; align-items: center; gap: 8px; padding: 7px 14px; font-size: 13px; color: var(--text); cursor: pointer; }
+  .ms-item:hover { background: var(--bg2); }
+  .ms-item input[type=checkbox] { cursor: pointer; accent-color: var(--blue); width: 14px; height: 14px; flex-shrink: 0; }
+  .ms-divider { height: 0.5px; background: var(--border); margin: 4px 0; }
+  .ms-footer { padding: 8px 12px; }
+  .ms-apply { width: 100%; padding: 7px; border-radius: var(--radius); border: none; background: var(--blue); color: #fff; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
+  .ms-apply:hover { opacity: 0.88; }
+
+  /* Campos obs comprometidas */
+  .comprometidas-panel { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 16px 18px; margin-bottom: 24px; }
+  .comprometidas-panel .panel-title { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 12px; }
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .comp-field { display: flex; flex-direction: column; gap: 4px; }
+  .comp-field label { font-size: 11px; color: var(--text2); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .comp-field input { font-size: 13px; padding: 6px 10px; border-radius: var(--radius); border: 0.5px solid var(--border2); background: var(--bg2); color: var(--text); font-family: inherit; width: 100%; outline: none; }
+  .comp-field input:focus { border-color: var(--blue); }
+  .comp-apply { margin-top: 12px; padding: 7px 18px; border-radius: var(--radius); border: none; background: var(--blue); color: #fff; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
+  .comp-apply:hover { opacity: 0.88; }
+
+  .section-title { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
+  .kpi { background: var(--bg2); border-radius: var(--radius); padding: 14px 16px; }
+  .kpi .lbl { font-size: 11px; color: var(--text2); margin-bottom: 4px; }
+  .kpi .val { font-size: 28px; font-weight: 600; line-height: 1; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--text2); margin-bottom: 14px; }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  .legend .sq { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  .card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; margin-bottom: 14px; }
+
+  .stacked-wrap { width: 100%; height: 34px; border-radius: 6px; overflow: hidden; display: flex; }
+  .stacked-seg { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; overflow: hidden; white-space: nowrap; }
+
+  /* Barra de avance */
+  .progress-wrap { width: 100%; height: 34px; border-radius: 6px; overflow: hidden; display: flex; background: var(--bg3); }
+  .progress-done { height: 100%; background: #1D9E75; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #085041; white-space: nowrap; overflow: hidden; }
+  .progress-pend { height: 100%; flex: 1; background: #e0e0da; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; color: var(--text3); white-space: nowrap; overflow: hidden; }
+  .bar-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .bar-sublabel { font-size: 11px; color: var(--text3); font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  .divider { height: 0.5px; background: var(--border); margin: 24px 0; }
+
+  .school-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .school-table th { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 12px; border-bottom: 0.5px solid var(--border); text-align: left; white-space: nowrap; }
+  .school-table th.center { text-align: center; }
+  .school-table td { padding: 10px 12px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
+  .school-table tr:last-child td { border-bottom: none; }
+  .school-table tr:hover td { background: var(--bg2); }
+  .school-name { font-weight: 500; font-size: 13px; }
+  .bar-cell { min-width: 200px; }
+
+  .loading-wrap { text-align: center; padding: 60px 20px; color: var(--text2); }
+  .loading-wrap p { font-size: 15px; margin-bottom: 16px; }
+  .spinner { display: inline-flex; gap: 6px; }
+  .spinner span { width: 9px; height: 9px; border-radius: 50%; background: var(--border2); animation: pulse 1.2s infinite; }
+  .spinner span:nth-child(2) { animation-delay: 0.2s; }
+  .spinner span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse { 0%,80%,100%{opacity:.25} 40%{opacity:1} }
+  .error-wrap { background: var(--red-light); border: 1px solid var(--red); border-radius: var(--radius-lg); padding: 20px; color: var(--red); margin-bottom: 20px; font-size: 13px; line-height: 1.6; }
+  .error-wrap strong { display: block; font-size: 15px; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top-bar">
+    <h1>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <path d="M8 17V11M12 17V7M16 17V13"/>
+      </svg>
+      Observaciones de clases 2026
+    </h1>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span class="update-time" id="updateTime">—</span>
+      <button class="btn" onclick="loadData()">⟳ Actualizar</button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="fgroup ms-wrap">
+      <label>Colegio</label>
+      <div class="ms-box" id="msBox" onclick="toggleMenu(event)">
+        <span id="msLabel">Todos los colegios</span>
+        <span class="ms-arrow">▼</span>
+      </div>
+      <div class="ms-menu" id="msMenu" style="display:none" onclick="event.stopPropagation()">
+        <div class="ms-search"><input type="text" id="msSearch" placeholder="Buscar colegio..." oninput="filterMs(this.value)" onclick="event.stopPropagation()"></div>
+        <label class="ms-item"><input type="checkbox" id="msAll" onchange="toggleAll(this)"> <em>Todos los colegios</em></label>
+        <div class="ms-divider"></div>
+        <div id="msList"></div>
+        <div class="ms-footer"><button class="ms-apply" onclick="applyFilter(event)">Aplicar</button></div>
+      </div>
+    </div>
+    <button class="btn" style="align-self:flex-end" onclick="resetFilters()">↺ Limpiar</button>
+  </div>
+
+  <div id="compPanel" style="display:none"></div>
+  <div id="mainContent">
+    <div class="loading-wrap">
+      <p>Conectando con Google Sheets...</p>
+      <div class="spinner"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR12lk1D2Tt53qg9npkj17cXfynq5c7XFY_OprDP3RiCTjav8gjcMC4ad1tVx259EVbI1rSAeYl8EXY/pub?gid=1764730748&single=true&output=csv';
+
+const COLORS = [
+  { fill: '#E24B4A', light: '#FCEBEB', text: '#791F1F', label: 'Principiante' },
+  { fill: '#EF9F27', light: '#FAEEDA', text: '#633806', label: 'En desarrollo' },
+  { fill: '#1D9E75', light: '#E1F5EE', text: '#085041', label: 'Competente' },
+  { fill: '#378ADD', light: '#E6F1FB', text: '#0C447C', label: 'Destacado' }
+];
+
+let allSchools = [];
+let selectedColegios = new Set();
+let menuOpen = false;
+// { schoolName -> comprometidas }
+let comprometidas = {};
+
+/* ── CSV parsing ── */
+function parseCSV(text) {
+  const lines = text.trim().split('\n').filter(l => l.trim());
+  if (lines.length < 2) return [];
+  const headers = parseRow(lines[0]).map(h => h.trim().toLowerCase().replace(/\s+/g, ' '));
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const vals = parseRow(lines[i]);
+    const o = {}; headers.forEach((h, j) => o[h] = (vals[j] || '').trim());
+    const colegio = o['colegio'] || '';
+    if (!colegio) continue;
+    const obs  = parseFloat((o['total observaciones'] || '1').replace(',', '.')) || 1;
+    const prin = parseFloat((o['principiante']  || '0').replace(',', '.').replace('%','')) || 0;
+    const enDes= parseFloat((o['en desarrollo'] || '0').replace(',', '.').replace('%','')) || 0;
+    const comp = parseFloat((o['competente']    || '0').replace(',', '.').replace('%','')) || 0;
+    const dest = parseFloat((o['destacado']     || '0').replace(',', '.').replace('%','')) || 0;
+    rows.push({ colegio: colegio.trim(), obs, cats: [prin, enDes, comp, dest] });
+  }
+  return rows;
+}
+function parseRow(row) {
+  const r = []; let c = '', q = false;
+  for (let i = 0; i < row.length; i++) {
+    if (row[i] === '"') { q = !q; }
+    else if (row[i] === ',' && !q) { r.push(c.replace(/^"|"$/g, '')); c = ''; }
+    else c += row[i];
+  }
+  r.push(c.replace(/^"|"$/g, '')); return r;
+}
+function aggregate(rows) {
+  const bySchool = {};
+  rows.forEach(r => {
+    if (!bySchool[r.colegio]) bySchool[r.colegio] = { name: r.colegio, cats: [0,0,0,0], obs: 0 };
+    r.cats.forEach((v, i) => bySchool[r.colegio].cats[i] += v * r.obs);
+    bySchool[r.colegio].obs += r.obs;
+  });
+  return Object.values(bySchool);
+}
+
+/* ── Helpers ── */
+function pct(n, total) { return total ? Math.round((n / total) * 100) : 0; }
+
+function stackedBar(cats) {
+  const total = cats.reduce((a, b) => a + b, 0);
+  if (!total) return '<div class="stacked-wrap" style="background:var(--bg3)"></div>';
+  return '<div class="stacked-wrap">' + cats.map((v, i) => {
+    const p = (v / total * 100).toFixed(1);
+    const show = parseFloat(p) >= 7;
+    return `<div class="stacked-seg" style="width:${p}%;background:${COLORS[i].fill};color:${COLORS[i].text};">${show ? Math.round(parseFloat(p)) + '%' : ''}</div>`;
+  }).join('') + '</div>';
+}
+
+function progressBar(realizado, comprometido) {
+  if (!comprometido || comprometido <= 0) return '';
+  const donePct = Math.min(100, (realizado / comprometido) * 100);
+  const pendPct = 100 - donePct;
+  const doneLabel = donePct >= 12 ? `${Math.round(donePct)}% realizadas` : '';
+  const pendLabel = pendPct >= 12 ? `${Math.round(pendPct)}% pendientes` : '';
+  return `
+    <div class="bar-label-row">
+      <span class="bar-sublabel">Avance observaciones</span>
+      <span style="font-size:11px;color:var(--text3)">${realizado} de ${comprometido} comprometidas</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-done" style="width:${donePct}%">${doneLabel}</div>
+      ${pendPct > 0 ? `<div class="progress-pend">${pendLabel}</div>` : ''}
+    </div>`;
+}
+
+/* ── Panel de observaciones comprometidas ── */
+function renderCompPanel(schools) {
+  const panel = document.getElementById('compPanel');
+  if (selectedColegios.size < 1 || selectedColegios.size > 7) {
+    panel.style.display = 'none';
+    return;
+  }
+  panel.style.display = 'block';
+  panel.innerHTML = `
+    <div class="comprometidas-panel">
+      <div class="panel-title">Observaciones comprometidas por colegio</div>
+      <div class="comp-grid">
+        ${schools.map(s => `
+          <div class="comp-field">
+            <label title="${s.name}">${s.name}</label>
+            <input type="number" min="0" id="comp_${s.name.replace(/\s+/g,'_')}"
+              value="${comprometidas[s.name] || ''}"
+              placeholder="N° comprometidas"
+              oninput="updateComprometida('${s.name.replace(/'/g,"\\'")}', this.value)">
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function updateComprometida(name, val) {
+  const n = parseInt(val);
+  if (!isNaN(n) && n >= 0) comprometidas[name] = n;
+  else delete comprometidas[name];
+  render(false); // re-render sin reconstruir el panel
+}
+
+/* ── Render principal ── */
+function render(rebuildPanel = true) {
+  const filtered = allSchools.filter(s => selectedColegios.size === 0 || selectedColegios.has(s.name));
+  const showComp = selectedColegios.size >= 1 && selectedColegios.size <= 7;
+
+  if (rebuildPanel) renderCompPanel(filtered);
+
+  // Totales
+  const totalCats = [0,0,0,0];
+  let totalObs = 0;
+  filtered.forEach(s => {
+    s.cats.forEach((v, i) => totalCats[i] += v);
+    totalObs += s.obs;
+  });
+  const totalSum = totalCats.reduce((a,b) => a+b, 0);
+
+  // Avance total (suma de comprometidas vs realizadas del grupo)
+  let totalComp = 0, totalReal = 0;
+  if (showComp) {
+    filtered.forEach(s => {
+      const c = comprometidas[s.name];
+      if (c > 0) { totalComp += c; totalReal += Math.round(s.obs); }
+    });
+  }
+
+  let html = `
+    <div class="section-title">Resumen general</div>
+    <div class="kpi-grid">
+      ${COLORS.map((c, i) => `<div class="kpi" style="background:${c.light}">
+        <div class="lbl">${c.label}</div>
+        <div class="val" style="color:${c.fill}">${pct(totalCats[i], totalSum)}%</div>
+      </div>`).join('')}
+      <div class="kpi">
+        <div class="lbl">Total observaciones</div>
+        <div class="val" style="color:var(--text)">${Math.round(totalObs)}</div>
+      </div>
+    </div>
+
+    <div class="legend">
+      ${COLORS.map(c => `<span><span class="sq" style="background:${c.fill}"></span>${c.label}</span>`).join('')}
+    </div>
+
+    <div class="card" style="margin-bottom:24px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <span style="font-size:15px;font-weight:500">Distribución total</span>
+        <span style="font-size:12px;color:var(--text3)">${Math.round(totalObs)} observaciones</span>
+      </div>
+      ${showComp && totalComp > 0 ? `<div style="margin-bottom:12px">${progressBar(totalReal, totalComp)}</div>` : ''}
+      ${stackedBar(totalCats)}
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title" style="margin-bottom:12px">Por colegio</div>
+
+    <div class="card" style="overflow-x:auto">
+      <table class="school-table">
+        <thead>
+          <tr>
+            <th>Colegio</th>
+            <th class="center">Obs. realizadas</th>
+            ${COLORS.map(c => `<th class="center">${c.label}</th>`).join('')}
+            <th style="min-width:${showComp ? '380px' : '200px'}">Distribución</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+  filtered.sort((a, b) => {
+    const tA = a.cats.reduce((x,y) => x+y, 0), tB = b.cats.reduce((x,y) => x+y, 0);
+    return ((b.cats[2]+b.cats[3])/tB||0) - ((a.cats[2]+a.cats[3])/tA||0);
+  }).forEach(s => {
+    const total = s.cats.reduce((a,b) => a+b, 0);
+    const comp = comprometidas[s.name];
+    const hasComp = showComp && comp > 0;
+    html += `<tr>
+      <td><span class="school-name">${s.name}</span></td>
+      <td style="text-align:center;color:var(--text3)">${Math.round(s.obs)}</td>
+      ${s.cats.map((v, i) => `<td style="text-align:center;font-weight:600;color:${COLORS[i].fill}">${pct(v, total)}%</td>`).join('')}
+      <td class="bar-cell">
+        ${hasComp ? `<div style="margin-bottom:8px">${progressBar(Math.round(s.obs), comp)}</div>` : ''}
+        ${stackedBar(s.cats)}
+      </td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div>`;
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+/* ── Multi-select ── */
+function toggleMenu(e) {
+  e.stopPropagation();
+  const menu = document.getElementById('msMenu');
+  menuOpen = !menuOpen;
+  menu.style.display = menuOpen ? 'block' : 'none';
+  if (menuOpen) { document.getElementById('msSearch').value = ''; filterMs(''); }
+}
+document.addEventListener('click', () => {
+  if (menuOpen) { menuOpen = false; document.getElementById('msMenu').style.display = 'none'; commitFilter(); }
+});
+
+function filterMs(q) {
+  document.querySelectorAll('.ms-school-item').forEach(el => {
+    el.style.display = el.dataset.name.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+function toggleAll(cb) {
+  document.querySelectorAll('.ms-school-cb').forEach(c => c.checked = cb.checked);
+}
+function commitFilter() {
+  selectedColegios.clear();
+  const cbs = document.querySelectorAll('.ms-school-cb');
+  const anyChecked = Array.from(cbs).some(c => c.checked);
+  const allChecked = Array.from(cbs).every(c => c.checked);
+  if (anyChecked && !allChecked) {
+    cbs.forEach(c => { if (c.checked) selectedColegios.add(c.value); });
+  }
+  updateLabel();
+  render();
+}
+function applyFilter(e) {
+  if (e) e.stopPropagation();
+  menuOpen = false;
+  document.getElementById('msMenu').style.display = 'none';
+  commitFilter();
+}
+function updateLabel() {
+  const lbl = document.getElementById('msLabel');
+  if (selectedColegios.size === 0) lbl.textContent = 'Todos los colegios';
+  else if (selectedColegios.size === 1) lbl.textContent = [...selectedColegios][0];
+  else lbl.textContent = `${selectedColegios.size} colegios seleccionados`;
+}
+function resetFilters() {
+  selectedColegios.clear();
+  comprometidas = {};
+  document.querySelectorAll('.ms-school-cb').forEach(c => c.checked = false);
+  document.getElementById('msAll').checked = false;
+  updateLabel();
+  render();
+}
+function buildMenu() {
+  document.getElementById('msList').innerHTML = allSchools.map(s => `
+    <label class="ms-item ms-school-item" data-name="${s.name}">
+      <input type="checkbox" class="ms-school-cb" value="${s.name}"> ${s.name}
+    </label>`).join('');
+}
+
+/* ── Carga de datos ── */
+async function loadData() {
+  document.getElementById('mainContent').innerHTML = `
+    <div class="loading-wrap"><p>Conectando con Google Sheets...</p>
+    <div class="spinner"><span></span><span></span><span></span></div></div>`;
+  try {
+    const res = await fetch(SHEET_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    const rows = parseCSV(text);
+    if (!rows.length) throw new Error('No se encontraron datos en la planilla.');
+    allSchools = aggregate(rows);
+    allSchools.sort((a,b) => a.name.localeCompare(b.name, 'es'));
+    selectedColegios.clear();
+    comprometidas = {};
+    buildMenu();
+    render();
+    document.getElementById('updateTime').textContent = 'Actualizado: ' + new Date().toLocaleTimeString('es-CL');
+  } catch (err) {
+    document.getElementById('mainContent').innerHTML = `
+      <div class="error-wrap"><strong>Error al cargar los datos</strong>${err.message}</div>`;
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>
