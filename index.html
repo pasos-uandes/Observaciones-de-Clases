@@ -11,6 +11,7 @@
     --amber: #EF9F27; --amber-light: #FAEEDA;
     --green: #1D9E75; --green-light: #E1F5EE;
     --blue: #378ADD; --blue-light: #E6F1FB;
+    --slate: #64748B; --slate-light: #F1F5F9;
     --bg: #ffffff; --bg2: #f7f7f5; --bg3: #f0efec;
     --text: #1a1a1a; --text2: #666; --text3: #999;
     --border: rgba(0,0,0,0.1); --border2: rgba(0,0,0,0.2);
@@ -23,6 +24,7 @@
       --border: rgba(255,255,255,0.1); --border2: rgba(255,255,255,0.2);
       --red-light: #3a1010; --amber-light: #3a2a00;
       --green-light: #0a2a1e; --blue-light: #0a1e36;
+      --slate-light: #1e2530;
     }
   }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; background: var(--bg3); color: var(--text); min-height: 100vh; }
@@ -35,7 +37,6 @@
   .btn { font-size: 12px; padding: 6px 14px; border-radius: var(--radius); border: 0.5px solid var(--border2); background: var(--bg2); color: var(--text2); cursor: pointer; font-family: inherit; transition: background 0.15s; }
   .btn:hover { background: var(--bg3); color: var(--text); }
 
-  /* Filtro multi-select */
   .filters { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 24px; }
   .fgroup { display: flex; flex-direction: column; gap: 4px; }
   .fgroup label { font-size: 11px; font-weight: 500; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; }
@@ -54,6 +55,17 @@
   .ms-apply { width: 100%; padding: 7px; border-radius: var(--radius); border: none; background: var(--blue); color: #fff; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
   .ms-apply:hover { opacity: 0.88; }
 
+  /* Campos obs comprometidas */
+  .comprometidas-panel { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 16px 18px; margin-bottom: 24px; }
+  .comprometidas-panel .panel-title { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 12px; }
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .comp-field { display: flex; flex-direction: column; gap: 4px; }
+  .comp-field label { font-size: 11px; color: var(--text2); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .comp-field input { font-size: 13px; padding: 6px 10px; border-radius: var(--radius); border: 0.5px solid var(--border2); background: var(--bg2); color: var(--text); font-family: inherit; width: 100%; outline: none; }
+  .comp-field input:focus { border-color: var(--blue); }
+  .comp-apply { margin-top: 12px; padding: 7px 18px; border-radius: var(--radius); border: none; background: var(--blue); color: #fff; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
+  .comp-apply:hover { opacity: 0.88; }
+
   .section-title { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; }
 
   .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
@@ -70,9 +82,15 @@
   .stacked-wrap { width: 100%; height: 34px; border-radius: 6px; overflow: hidden; display: flex; }
   .stacked-seg { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; overflow: hidden; white-space: nowrap; }
 
+  /* Barra de avance */
+  .progress-wrap { width: 100%; height: 34px; border-radius: 6px; overflow: hidden; display: flex; background: var(--bg3); }
+  .progress-done { height: 100%; background: #1D9E75; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #085041; white-space: nowrap; overflow: hidden; }
+  .progress-pend { height: 100%; flex: 1; background: #e0e0da; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; color: var(--text3); white-space: nowrap; overflow: hidden; }
+  .bar-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .bar-sublabel { font-size: 11px; color: var(--text3); font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+
   .divider { height: 0.5px; background: var(--border); margin: 24px 0; }
 
-  /* Tabla por colegio */
   .school-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .school-table th { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 12px; border-bottom: 0.5px solid var(--border); text-align: left; white-space: nowrap; }
   .school-table th.center { text-align: center; }
@@ -80,8 +98,7 @@
   .school-table tr:last-child td { border-bottom: none; }
   .school-table tr:hover td { background: var(--bg2); }
   .school-name { font-weight: 500; font-size: 13px; }
-  .obs-badge { font-size: 11px; color: var(--text3); }
-  .bar-cell { min-width: 260px; }
+  .bar-cell { min-width: 200px; }
 
   .loading-wrap { text-align: center; padding: 60px 20px; color: var(--text2); }
   .loading-wrap p { font-size: 15px; margin-bottom: 16px; }
@@ -129,6 +146,7 @@
     <button class="btn" style="align-self:flex-end" onclick="resetFilters()">↺ Limpiar</button>
   </div>
 
+  <div id="compPanel" style="display:none"></div>
   <div id="mainContent">
     <div class="loading-wrap">
       <p>Conectando con Google Sheets...</p>
@@ -147,10 +165,13 @@ const COLORS = [
   { fill: '#378ADD', light: '#E6F1FB', text: '#0C447C', label: 'Destacado' }
 ];
 
-let allSchools = []; // { name, cats:[p,ed,c,d], obs }
+let allSchools = [];
 let selectedColegios = new Set();
 let menuOpen = false;
+// { schoolName -> comprometidas }
+let comprometidas = {};
 
+/* ── CSV parsing ── */
 function parseCSV(text) {
   const lines = text.trim().split('\n').filter(l => l.trim());
   if (lines.length < 2) return [];
@@ -161,16 +182,15 @@ function parseCSV(text) {
     const o = {}; headers.forEach((h, j) => o[h] = (vals[j] || '').trim());
     const colegio = o['colegio'] || '';
     if (!colegio) continue;
-    const obs = parseFloat((o['total observaciones'] || o['total_observaciones'] || '1').replace(',', '.')) || 1;
-    const prin = parseFloat((o['principiante'] || '0').replace(',', '.').replace('%', '')) || 0;
-    const enDes = parseFloat((o['en desarrollo'] || '0').replace(',', '.').replace('%', '')) || 0;
-    const comp = parseFloat((o['competente'] || '0').replace(',', '.').replace('%', '')) || 0;
-    const dest = parseFloat((o['destacado'] || '0').replace(',', '.').replace('%', '')) || 0;
+    const obs  = parseFloat((o['total observaciones'] || '1').replace(',', '.')) || 1;
+    const prin = parseFloat((o['principiante']  || '0').replace(',', '.').replace('%','')) || 0;
+    const enDes= parseFloat((o['en desarrollo'] || '0').replace(',', '.').replace('%','')) || 0;
+    const comp = parseFloat((o['competente']    || '0').replace(',', '.').replace('%','')) || 0;
+    const dest = parseFloat((o['destacado']     || '0').replace(',', '.').replace('%','')) || 0;
     rows.push({ colegio: colegio.trim(), obs, cats: [prin, enDes, comp, dest] });
   }
   return rows;
 }
-
 function parseRow(row) {
   const r = []; let c = '', q = false;
   for (let i = 0; i < row.length; i++) {
@@ -180,7 +200,6 @@ function parseRow(row) {
   }
   r.push(c.replace(/^"|"$/g, '')); return r;
 }
-
 function aggregate(rows) {
   const bySchool = {};
   rows.forEach(r => {
@@ -191,6 +210,7 @@ function aggregate(rows) {
   return Object.values(bySchool);
 }
 
+/* ── Helpers ── */
 function pct(n, total) { return total ? Math.round((n / total) * 100) : 0; }
 
 function stackedBar(cats) {
@@ -203,10 +223,62 @@ function stackedBar(cats) {
   }).join('') + '</div>';
 }
 
-function render() {
-  const filtered = allSchools.filter(s => selectedColegios.size === 0 || selectedColegios.has(s.name));
+function progressBar(realizado, comprometido) {
+  if (!comprometido || comprometido <= 0) return '';
+  const donePct = Math.min(100, (realizado / comprometido) * 100);
+  const pendPct = 100 - donePct;
+  const doneLabel = donePct >= 12 ? `${Math.round(donePct)}% realizadas` : '';
+  const pendLabel = pendPct >= 12 ? `${Math.round(pendPct)}% pendientes` : '';
+  return `
+    <div class="bar-label-row">
+      <span class="bar-sublabel">Avance observaciones</span>
+      <span style="font-size:11px;color:var(--text3)">${realizado} de ${comprometido} comprometidas</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-done" style="width:${donePct}%">${doneLabel}</div>
+      ${pendPct > 0 ? `<div class="progress-pend">${pendLabel}</div>` : ''}
+    </div>`;
+}
 
-  // Totales del filtro actual
+/* ── Panel de observaciones comprometidas ── */
+function renderCompPanel(schools) {
+  const panel = document.getElementById('compPanel');
+  if (selectedColegios.size < 1 || selectedColegios.size > 7) {
+    panel.style.display = 'none';
+    return;
+  }
+  panel.style.display = 'block';
+  panel.innerHTML = `
+    <div class="comprometidas-panel">
+      <div class="panel-title">Observaciones comprometidas por colegio</div>
+      <div class="comp-grid">
+        ${schools.map(s => `
+          <div class="comp-field">
+            <label title="${s.name}">${s.name}</label>
+            <input type="number" min="0" id="comp_${s.name.replace(/\s+/g,'_')}"
+              value="${comprometidas[s.name] || ''}"
+              placeholder="N° comprometidas"
+              oninput="updateComprometida('${s.name.replace(/'/g,"\\'")}', this.value)">
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function updateComprometida(name, val) {
+  const n = parseInt(val);
+  if (!isNaN(n) && n >= 0) comprometidas[name] = n;
+  else delete comprometidas[name];
+  render(false); // re-render sin reconstruir el panel
+}
+
+/* ── Render principal ── */
+function render(rebuildPanel = true) {
+  const filtered = allSchools.filter(s => selectedColegios.size === 0 || selectedColegios.has(s.name));
+  const showComp = selectedColegios.size >= 1 && selectedColegios.size <= 7;
+
+  if (rebuildPanel) renderCompPanel(filtered);
+
+  // Totales
   const totalCats = [0,0,0,0];
   let totalObs = 0;
   filtered.forEach(s => {
@@ -214,6 +286,15 @@ function render() {
     totalObs += s.obs;
   });
   const totalSum = totalCats.reduce((a,b) => a+b, 0);
+
+  // Avance total (suma de comprometidas vs realizadas del grupo)
+  let totalComp = 0, totalReal = 0;
+  if (showComp) {
+    filtered.forEach(s => {
+      const c = comprometidas[s.name];
+      if (c > 0) { totalComp += c; totalReal += Math.round(s.obs); }
+    });
+  }
 
   let html = `
     <div class="section-title">Resumen general</div>
@@ -237,6 +318,7 @@ function render() {
         <span style="font-size:15px;font-weight:500">Distribución total</span>
         <span style="font-size:12px;color:var(--text3)">${Math.round(totalObs)} observaciones</span>
       </div>
+      ${showComp && totalComp > 0 ? `<div style="margin-bottom:12px">${progressBar(totalReal, totalComp)}</div>` : ''}
       ${stackedBar(totalCats)}
     </div>
 
@@ -248,24 +330,28 @@ function render() {
         <thead>
           <tr>
             <th>Colegio</th>
-            <th class="center">Observaciones</th>
+            <th class="center">Obs. realizadas</th>
             ${COLORS.map(c => `<th class="center">${c.label}</th>`).join('')}
-            <th>Distribución</th>
+            <th style="min-width:${showComp ? '380px' : '200px'}">Distribución</th>
           </tr>
         </thead>
-        <tbody>
-  `;
+        <tbody>`;
 
   filtered.sort((a, b) => {
     const tA = a.cats.reduce((x,y) => x+y, 0), tB = b.cats.reduce((x,y) => x+y, 0);
     return ((b.cats[2]+b.cats[3])/tB||0) - ((a.cats[2]+a.cats[3])/tA||0);
   }).forEach(s => {
     const total = s.cats.reduce((a,b) => a+b, 0);
+    const comp = comprometidas[s.name];
+    const hasComp = showComp && comp > 0;
     html += `<tr>
       <td><span class="school-name">${s.name}</span></td>
       <td style="text-align:center;color:var(--text3)">${Math.round(s.obs)}</td>
       ${s.cats.map((v, i) => `<td style="text-align:center;font-weight:600;color:${COLORS[i].fill}">${pct(v, total)}%</td>`).join('')}
-      <td class="bar-cell">${stackedBar(s.cats)}</td>
+      <td class="bar-cell">
+        ${hasComp ? `<div style="margin-bottom:8px">${progressBar(Math.round(s.obs), comp)}</div>` : ''}
+        ${stackedBar(s.cats)}
+      </td>
     </tr>`;
   });
 
@@ -273,39 +359,30 @@ function render() {
   document.getElementById('mainContent').innerHTML = html;
 }
 
-// Multi-select logic
+/* ── Multi-select ── */
 function toggleMenu(e) {
   e.stopPropagation();
   const menu = document.getElementById('msMenu');
   menuOpen = !menuOpen;
   menu.style.display = menuOpen ? 'block' : 'none';
-  if (menuOpen) document.getElementById('msSearch').value = '', filterMs('');
+  if (menuOpen) { document.getElementById('msSearch').value = ''; filterMs(''); }
 }
-
-document.addEventListener('click', () => {
-  if (menuOpen) { applyFilter(); }
-});
+document.addEventListener('click', () => { if (menuOpen) applyFilter(); });
 
 function filterMs(q) {
-  const items = document.querySelectorAll('.ms-school-item');
-  items.forEach(el => {
+  document.querySelectorAll('.ms-school-item').forEach(el => {
     el.style.display = el.dataset.name.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
   });
 }
-
 function toggleAll(cb) {
   document.querySelectorAll('.ms-school-cb').forEach(c => c.checked = cb.checked);
 }
-
 function applyFilter() {
   selectedColegios.clear();
-  const all = document.getElementById('msAll');
   const cbs = document.querySelectorAll('.ms-school-cb');
   const anyChecked = Array.from(cbs).some(c => c.checked);
   const allChecked = Array.from(cbs).every(c => c.checked);
-  if (!anyChecked || allChecked) {
-    // nada seleccionado o todo seleccionado = mostrar todos
-  } else {
+  if (anyChecked && !allChecked) {
     cbs.forEach(c => { if (c.checked) selectedColegios.add(c.value); });
   }
   updateLabel();
@@ -313,37 +390,32 @@ function applyFilter() {
   document.getElementById('msMenu').style.display = 'none';
   render();
 }
-
 function updateLabel() {
   const lbl = document.getElementById('msLabel');
   if (selectedColegios.size === 0) lbl.textContent = 'Todos los colegios';
   else if (selectedColegios.size === 1) lbl.textContent = [...selectedColegios][0];
   else lbl.textContent = `${selectedColegios.size} colegios seleccionados`;
 }
-
 function resetFilters() {
   selectedColegios.clear();
+  comprometidas = {};
   document.querySelectorAll('.ms-school-cb').forEach(c => c.checked = false);
   document.getElementById('msAll').checked = false;
   updateLabel();
   render();
 }
-
 function buildMenu() {
-  const list = document.getElementById('msList');
-  list.innerHTML = allSchools.map(s => `
+  document.getElementById('msList').innerHTML = allSchools.map(s => `
     <label class="ms-item ms-school-item" data-name="${s.name}">
-      <input type="checkbox" class="ms-school-cb" value="${s.name}">
-      ${s.name}
+      <input type="checkbox" class="ms-school-cb" value="${s.name}"> ${s.name}
     </label>`).join('');
 }
 
+/* ── Carga de datos ── */
 async function loadData() {
   document.getElementById('mainContent').innerHTML = `
-    <div class="loading-wrap">
-      <p>Conectando con Google Sheets...</p>
-      <div class="spinner"><span></span><span></span><span></span></div>
-    </div>`;
+    <div class="loading-wrap"><p>Conectando con Google Sheets...</p>
+    <div class="spinner"><span></span><span></span><span></span></div></div>`;
   try {
     const res = await fetch(SHEET_URL);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -353,15 +425,13 @@ async function loadData() {
     allSchools = aggregate(rows);
     allSchools.sort((a,b) => a.name.localeCompare(b.name, 'es'));
     selectedColegios.clear();
+    comprometidas = {};
     buildMenu();
     render();
     document.getElementById('updateTime').textContent = 'Actualizado: ' + new Date().toLocaleTimeString('es-CL');
   } catch (err) {
     document.getElementById('mainContent').innerHTML = `
-      <div class="error-wrap">
-        <strong>Error al cargar los datos</strong>
-        ${err.message}
-      </div>`;
+      <div class="error-wrap"><strong>Error al cargar los datos</strong>${err.message}</div>`;
   }
 }
 
